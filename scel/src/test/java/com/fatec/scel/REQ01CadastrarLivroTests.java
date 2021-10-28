@@ -31,7 +31,6 @@ class REQ01CadastrarLivroTests {
 		// Dado – que o atendente tem um livro nao cadastrado
 		repository.deleteAll();
 		Livro livro = new Livro("1111", "Engenharia de Software", "Pressman");
-
 		// Quando – o atendente cadastra um livro com informações validas
 		repository.save(livro);
 
