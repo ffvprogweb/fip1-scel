@@ -5,7 +5,7 @@ import java.util.Optional;
 import com.fatec.scel.mantemLivro.model.Livro;
 
 public interface LivroServico {
-	public Iterable<Livro> consultaTodos();
+	public List<Livro> consultaTodos();
 
 	public Livro save(Livro livro);
 
