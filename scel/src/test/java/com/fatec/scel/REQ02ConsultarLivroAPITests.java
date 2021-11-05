@@ -63,6 +63,7 @@ class REQ02ConsultarLivroAPITests {
 		re.setId(ro.getId());
 		assertEquals(re.getId(), ro.getId());
 		//assertTrue(re.equals(ro));
+		//teste de validacao
 	}
 
 	@Test
