@@ -36,7 +36,7 @@ public class APILivroController {
 		logger.info(">>>>>> controller create - post iniciado");
 		ResponseEntity<?> response = null;
 		if (result.hasErrors()) {
-			logger.info(">>>>>> controller create - dados inválidos => " + livro.getIsbn());
+			logger.info(">>>>>> controller create - dados inválidos => " + livro.toString());
 			response = ResponseEntity.badRequest().body("Dados inválidos.");
 		} else {
 			Optional<Livro> umLivro = Optional.ofNullable(servico.consultaPorIsbn(livro.getIsbn()));
