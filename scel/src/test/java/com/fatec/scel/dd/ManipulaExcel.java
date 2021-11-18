@@ -18,7 +18,7 @@ public class ManipulaExcel {
 		try {
 			// Abre o arquivo Excel
 			logger = LogManager.getLogger(ManipulaExcel.class);
-			logger.info("manipula excel abre arquivo path = " + path + "-" + sheetName);
+			logger.info(">>>>>> 2. Abre a planilha de teste path = " + path + "-" + sheetName);
 			FileInputStream ExcelFile = new FileInputStream(path);
 			// Acessa a planilha de dados de teste
 			excelWBook = new XSSFWorkbook(ExcelFile);
