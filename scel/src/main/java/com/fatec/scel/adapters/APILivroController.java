@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,8 +53,14 @@ public class APILivroController {
 	}
 
 	@GetMapping
-	public List<Livro> consultaTodos() {
-		return servico.consultaTodos();
+	public ResponseEntity<List<Livro>> consultaTodos() {
+		List<Livro> listaDeLivros = new ArrayList<Livro>();
+		servico.consultaTodos().forEach(listaDeLivros::add);
+		logger.info(">>>>>> controller consulta todos chamado");
+		if (listaDeLivros.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(listaDeLivros, HttpStatus.OK);
 	}
 
 	@GetMapping("/{isbn}")
@@ -68,5 +75,30 @@ public class APILivroController {
 			response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 		return response;
+	}
+
+	@GetMapping("/id/{id}")
+	public ResponseEntity<Livro> findById(@PathVariable long id) {
+		logger.info(">>>>>> 1. controller chamou servico consulta por id => " + id);
+		Optional<Livro> livro = Optional.ofNullable(servico.consultaPorId(id));
+		if (livro.isPresent()) {
+			return new ResponseEntity<>(livro.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Livro> updateLivro(@PathVariable("id") long id, @RequestBody Livro livro) {
+		logger.info(">>>>>> 1. controller update chamou servico consulta por id => " + id);
+		Optional<Livro> umLivro = Optional.ofNullable(servico.consultaPorId(id));
+		if (umLivro.isPresent()) {
+			Livro _livro = umLivro.get();
+			_livro.setTitulo(livro.getTitulo());
+			_livro.setAutor(livro.getAutor());
+			return new ResponseEntity<>(servico.save(_livro), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 }

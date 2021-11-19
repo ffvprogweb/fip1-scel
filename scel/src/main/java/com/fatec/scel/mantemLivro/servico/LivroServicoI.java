@@ -35,9 +35,9 @@ public class LivroServicoI implements LivroServico {
 	}
 
 	@Override
-	public Optional<Livro> consultaPorId(Long id) {
+	public Livro consultaPorId(Long id) {
 		logger.info(">>>>>> servico consulta por id chamado");
-		return repository.findById(id);
+		return repository.findById(id).get();
 	}
 
 	@Override

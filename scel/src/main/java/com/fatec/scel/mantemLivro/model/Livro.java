@@ -3,12 +3,12 @@ package com.fatec.scel.mantemLivro.model;
 import java.util.Objects;
 
 import javax.persistence.*;
-//import javax.validation.constraints.NotBlank;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotBlank;
+
 
 @Entity
 public class Livro {
@@ -20,7 +20,6 @@ public class Livro {
 	@Column(unique = true) // nao funciona com @Valid tem que tratar na camada de persistencia
 	private String isbn;
 	@NotNull
-	@NotBlank
 	@Size(min = 1, max = 50, message = "Titulo deve ter entre 1 e 50 caracteres")
 	private String titulo;
 	@NotNull
