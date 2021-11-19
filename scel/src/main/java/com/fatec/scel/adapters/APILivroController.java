@@ -30,10 +30,8 @@ public class APILivroController {
 	Logger logger = LogManager.getLogger(APILivroController.class);
 	@Autowired
 	LivroServico servico; // controller nao conhece a implementacao
-
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody @Valid Livro livro, BindingResult result) {
-
 		logger.info(">>>>>> controller create - post iniciado");
 		ResponseEntity<?> response = null;
 		if (result.hasErrors()) {
@@ -51,7 +49,6 @@ public class APILivroController {
 		}
 		return response;
 	}
-
 	@GetMapping
 	public ResponseEntity<List<Livro>> consultaTodos() {
 		List<Livro> listaDeLivros = new ArrayList<Livro>();
@@ -62,7 +59,6 @@ public class APILivroController {
 		}
 		return new ResponseEntity<>(listaDeLivros, HttpStatus.OK);
 	}
-
 	@GetMapping("/{isbn}")
 	public ResponseEntity<Livro> findByIsbn(@PathVariable String isbn) {
 		logger.info(">>>>>> 1. controller chamou servico consulta por isbn => " + isbn);
@@ -89,14 +85,13 @@ public class APILivroController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Livro> updateLivro(@PathVariable("id") long id, @RequestBody Livro livro) {
+	public ResponseEntity<Livro> update(@PathVariable("id") long id, @Valid @RequestBody Livro livro) {
 		logger.info(">>>>>> 1. controller update chamou servico consulta por id => " + id);
-		Optional<Livro> umLivro = Optional.ofNullable(servico.consultaPorId(id));
-		if (umLivro.isPresent()) {
-			Livro _livro = umLivro.get();
-			_livro.setTitulo(livro.getTitulo());
-			_livro.setAutor(livro.getAutor());
-			return new ResponseEntity<>(servico.save(_livro), HttpStatus.OK);
+		Livro umLivro = servico.consultaPorId(id);
+		if (umLivro != null) {
+			umLivro.setTitulo(livro.getTitulo());
+			umLivro.setAutor(livro.getAutor());
+			return new ResponseEntity<>(servico.save(umLivro), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
