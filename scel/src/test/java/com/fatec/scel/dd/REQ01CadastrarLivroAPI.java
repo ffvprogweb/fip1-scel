@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import com.fatec.scel.mantemLivro.model.Livro;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class REQ01CadastrarLivroAPITests {
+class REQ01CadastrarLivroAPI {
 	String urlBase = "/api/v1/livros";
 	@Autowired
 	private TestRestTemplate testRestTemplate;
