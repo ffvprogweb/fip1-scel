@@ -24,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fatec.scel.mantemLivro.model.Livro;
 import com.fatec.scel.mantemLivro.ports.LivroServico;
 
+import io.swagger.v3.oas.annotations.Operation;
+
+
+
 @RestController
 @RequestMapping("/api/v1/livros")
 public class APILivroController {
@@ -31,6 +35,7 @@ public class APILivroController {
 	@Autowired
 	LivroServico servico; // controller nao conhece a implementacao
 	@PostMapping
+	@Operation (summary = "Cadastrar um livro na biblioteca")
 	public ResponseEntity<?> create(@RequestBody @Valid Livro livro, BindingResult result) {
 		logger.info(">>>>>> controller create - post iniciado");
 		ResponseEntity<?> response = null;
