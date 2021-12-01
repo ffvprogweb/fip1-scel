@@ -7,8 +7,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.fatec.scel.mantemLivro.model.Livro;
@@ -31,19 +30,20 @@ public class LivroServicoI implements LivroServico {
 	@Override
 	public Livro save(Livro livro) {
 		logger.info(">>>>>> servico save - cadastro de livro ");
-		return repository.save(livro); // retorna o livro com id
+		return repository.save(livro);
+
 	}
 
 	@Override
 	public Livro consultaPorId(Long id) {
 		logger.info(">>>>>> servico consulta por id chamado");
-		Optional <Livro> livro = repository.findById(id);
+		Optional<Livro> livro = repository.findById(id);
 		if (livro.isPresent()) {
 			return livro.get();
-		}else {
+		} else {
 			return null;
 		}
-		
+
 	}
 
 	@Override

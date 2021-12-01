@@ -1,7 +1,7 @@
 isbn, titulo, autor, resultado
-1111, Engenharia de Software, Padua, 201 CREATED
-2222, Engenharia de Software, Sommerville, 201 CREATED
-2222, Engenharia de Software, Sommerville, 400 BAD_REQUEST
+3333, Engenharia de Software, Padua, 201 CREATED
+4444, Código Limpo, Martin, 201 CREATED
+1111, Engenharia de Software, Sommerville, 400 BAD_REQUEST
 '', Engenharia de Software, Sommerville, 400 BAD_REQUEST
 , Engenharia de Software, Sommerville, 400 BAD_REQUEST
 3333, , Padua, 400 BAD_REQUEST

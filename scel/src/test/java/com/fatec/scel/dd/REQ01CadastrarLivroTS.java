@@ -2,6 +2,8 @@ package com.fatec.scel.dd;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.apache.logging.log4j.LogManager;
@@ -35,10 +37,10 @@ class REQ01CadastrarLivroTS {
 		logger = LogManager.getLogger(REQ01CadastrarLivroTS.class);
 		driver = DriverFactory.getDriver();
 		driver.get("https://ts-scel-web.herokuapp.com/login");
-		//js = (JavascriptExecutor) driver;
+		// js = (JavascriptExecutor) driver;
 		try {
 			ManipulaExcel.setExcelFile("C:\\temp\\cadastrarLivro2.xlsx", "Planilha1");
-			
+
 		} catch (Exception e) {
 			logger.info(">>>>>> 3. Erro no path ou workbook =" + e.getMessage());
 		}
@@ -52,46 +54,22 @@ class REQ01CadastrarLivroTS {
 	@Test
 	public void cadastrarLivro() throws Exception {
 		// se o campo for lancado na planilha como numerico mas a entrada eh String deve
-		// ser tratado ou na planilha indicando string ou aqui (no script de teste) transformando para string
+		// ser tratado ou na planilha indicando string ou aqui (no script de teste)
+		// transformando para string
 		pageLogin = new PageLogin(driver);
 		pageLogin.login("jose", "123");
 		int linha = 1; // linha 0 cabecalho
-		//*************************************************************************************************************
-		// Interpretador das condicoes de teste 
-		//*************************************************************************************************************
+		// *************************************************************************************************************
+		// Interpretador das condicoes de teste
+		// *************************************************************************************************************
 		while (!ManipulaExcel.getCellData(linha, 0).equals("final".trim())) {
+			logger.info(">>>>>> 4. processando a linha =" + linha + "-" + "condição de teste = " + ManipulaExcel.getCellData(linha, 3));
 			pageCadastrarLivro = new PageCadastrarLivro(driver);
 			try {
-				pageCadastrarLivro.cadastrar(ManipulaExcel.getCellData(linha, 0), ManipulaExcel.getCellData(linha, 1),
-						ManipulaExcel.getCellData(linha, 2));
+				pageCadastrarLivro.cadastrar(ManipulaExcel.getCellData(linha, 0), ManipulaExcel.getCellData(linha, 1), ManipulaExcel.getCellData(linha, 2));
+				//driver.manage().timeouts().implicitlyWait(2000, TimeUnit.SECONDS);
 				espera();
-				if (ManipulaExcel.getCellData(linha, 3).equals("Lista de livros")) {
-					logger.info(">>>>>> 4. Processando a linha = " + linha + "- ISBN = "
-							+ ManipulaExcel.getCellData(linha, 0) + "- RE = " + ManipulaExcel.getCellData(linha, 3));
-					assertEquals(ManipulaExcel.getCellData(linha, 3),
-							pageCadastrarLivro.getResultadoCadastroComSucesso());
-				}
-				if ((ManipulaExcel.getCellData(linha, 3).trim()).equals("Livro ja cadastrado")) {
-					logger.info(">>>>>> 4. Processando a linha = " + linha + "- ISBN = "
-							+ ManipulaExcel.getCellData(linha, 0) + "- RE = " + ManipulaExcel.getCellData(linha, 3));
-					assertEquals(ManipulaExcel.getCellData(linha, 3),
-							pageCadastrarLivro.getResultadoLivroJaCadastrado());
-				}
-				if (ManipulaExcel.getCellData(linha, 3).equals("ISBN deve ter 4 caracteres")) {
-					logger.info(">>>>>> 4. Processando a linha = " + linha + "- ISBN = "
-							+ ManipulaExcel.getCellData(linha, 0) + "- RE = " + ManipulaExcel.getCellData(linha, 3));
-					assertEquals(ManipulaExcel.getCellData(linha, 3), pageCadastrarLivro.getResultadoISBNInvalido());
-				}
-				if (ManipulaExcel.getCellData(linha, 3).equals("Titulo deve ter entre 1 e 50 caracteres")) {
-					logger.info(">>>>>> 4. Processando a linha = " + linha + "- ISBN = "
-							+ ManipulaExcel.getCellData(linha, 0) + "- RE = " + ManipulaExcel.getCellData(linha, 3));
-					assertEquals(ManipulaExcel.getCellData(linha, 3), pageCadastrarLivro.getResultadoISBNInvalido());
-				}
-				if (ManipulaExcel.getCellData(linha, 3).equals("Autor deve ter entre 1 e 50 caracteres")) {
-					logger.info(">>>>>> 4. Processando a linha = " + linha + "- ISBN = "
-							+ ManipulaExcel.getCellData(linha, 0) + "- RE = " + ManipulaExcel.getCellData(linha, 3));
-					assertEquals(ManipulaExcel.getCellData(linha, 3), pageCadastrarLivro.getResultadoISBNInvalido());
-				}
+				assertEquals(ManipulaExcel.getCellData(linha, 3), pageCadastrarLivro.getResultadoObtido(ManipulaExcel.getCellData(linha, 3)));
 				pageCadastrarLivro.voltarParaMenu();
 			} catch (NoSuchElementException e) {
 				logger.info(">>>>>> 5. Elemento não localizado =" + e.getMessage() + "re - " + ManipulaExcel.getCellData(linha, 3));
@@ -103,6 +81,7 @@ class REQ01CadastrarLivroTS {
 			linha = linha + 1;
 		}
 	}
+
 	public void espera() {
 		try {
 			Thread.sleep(4000);

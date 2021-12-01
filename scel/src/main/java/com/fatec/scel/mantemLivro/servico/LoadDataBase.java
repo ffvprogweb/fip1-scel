@@ -20,7 +20,7 @@ class LoadDatabase {
       log.info("Preloading " + repository.save(new Livro("1111", "Engenharia de Software","Pressman")));
       log.info("Preloading " + repository.save(new Livro("2222", "Introdução ao Teste de Software", "Delamaro")));
       log.info("Preloading " + repository.save(new Livro("9999", "Principios de Analise OO", "Bezerra")));
-      log.info("Preloading " + repository.save(new Livro("8888", "Principios de Analise OO", "Bezerra")));
+      log.info("Preloading " + repository.save(new Livro("8888", "Código Limpo", "Martin")));
     };
   }
 }

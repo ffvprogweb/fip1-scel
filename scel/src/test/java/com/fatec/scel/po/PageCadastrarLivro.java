@@ -1,5 +1,7 @@
 package com.fatec.scel.po;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -15,6 +17,7 @@ public class PageCadastrarLivro {
 	private By resultadoISBNInvalidoBy = By.cssSelector(".text-danger:nth-child(3)");
 	private By btnExcluirBy = By.cssSelector("tr:nth-child(2) .delete");
 	private By btnVoltarBy = By.linkText("Voltar");
+	private String resultadoObtido;
 
 	public PageCadastrarLivro(WebDriver driver) {
 		this.driver = driver;
@@ -35,7 +38,7 @@ public class PageCadastrarLivro {
 		driver.findElement(autorBy).sendKeys(autor);
 		driver.findElement(tituloBy).sendKeys(titulo);
 		driver.findElement(btnCadastrarLivroBy).click();
-		espera();
+		driver.manage().timeouts().implicitlyWait(2000,TimeUnit.SECONDS);
 		return new PageCadastrarLivro(driver);
 	}
 
@@ -44,15 +47,18 @@ public class PageCadastrarLivro {
 	 */
 	public String getResultadoCadastroComSucesso() {
 		espera();
-		return driver.findElement(resultadoCadastroComSucessoBy).getText();
+		resultadoObtido = driver.findElement(resultadoCadastroComSucessoBy).getText();
+		return resultadoObtido;
 	}
 
 	public String getResultadoLivroJaCadastrado() {
-		return driver.findElement(resultadoLivroJaCadastradoBy).getText();
+		resultadoObtido = driver.findElement(resultadoLivroJaCadastradoBy).getText();
+		return resultadoObtido;
 	}
 
 	public String getResultadoISBNInvalido() {
-		return driver.findElement(resultadoISBNInvalidoBy).getText();
+		resultadoObtido = driver.findElement(resultadoISBNInvalidoBy).getText();
+		return resultadoObtido;
 	}
 
 	public void excluiRegistro() {
@@ -61,6 +67,19 @@ public class PageCadastrarLivro {
 
 	public void voltarParaMenu() {
 		driver.findElement(btnVoltarBy).click();
+	}
+
+	public String getResultadoObtido(String re) {
+		if (re.equals("Lista de livros")) {
+			resultadoObtido = driver.findElement(resultadoCadastroComSucessoBy).getText();
+		}
+		if (re.equals("Livro ja cadastrado")) {
+			resultadoObtido = driver.findElement(resultadoLivroJaCadastradoBy).getText();
+		}
+		if (re.equals("ISBN deve ter 4 caracteres")) {
+			resultadoObtido = driver.findElement(resultadoISBNInvalidoBy).getText();
+		}
+		return resultadoObtido;
 	}
 
 	public void espera() { // fixa
