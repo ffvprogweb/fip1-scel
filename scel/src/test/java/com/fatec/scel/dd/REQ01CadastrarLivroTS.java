@@ -26,7 +26,7 @@ import com.fatec.scel.po.PageLogin;
 class REQ01CadastrarLivroTS {
 	static private WebDriver driver;
 	static JavascriptExecutor js;
-	private PageCadastrarLivro pageCadastrarLivro;
+	private PageCadastrarLivro pageLivro;
 	private PageLogin pageLogin;
 	private static Logger logger;
 	@Autowired
@@ -64,13 +64,13 @@ class REQ01CadastrarLivroTS {
 		// *************************************************************************************************************
 		while (!ManipulaExcel.getCellData(linha, 0).equals("final".trim())) {
 			logger.info(">>>>>> 4. processando a linha =" + linha + "-" + "condição de teste = " + ManipulaExcel.getCellData(linha, 3));
-			pageCadastrarLivro = new PageCadastrarLivro(driver);
+			pageLivro = new PageCadastrarLivro(driver);
 			try {
-				pageCadastrarLivro.cadastrar(ManipulaExcel.getCellData(linha, 0), ManipulaExcel.getCellData(linha, 1), ManipulaExcel.getCellData(linha, 2));
+				pageLivro.cadastrar(ManipulaExcel.getCellData(linha, 0), ManipulaExcel.getCellData(linha, 1), ManipulaExcel.getCellData(linha, 2));
 				//driver.manage().timeouts().implicitlyWait(2000, TimeUnit.SECONDS);
 				espera();
-				assertEquals(ManipulaExcel.getCellData(linha, 3), pageCadastrarLivro.getResultadoObtido(ManipulaExcel.getCellData(linha, 3)));
-				pageCadastrarLivro.voltarParaMenu();
+				assertEquals(ManipulaExcel.getCellData(linha, 3), pageLivro.getResultadoObtido(ManipulaExcel.getCellData(linha, 3)));
+				pageLivro.voltarParaMenu();
 			} catch (NoSuchElementException e) {
 				logger.info(">>>>>> 5. Elemento não localizado =" + e.getMessage() + "re - " + ManipulaExcel.getCellData(linha, 3));
 				fail("Exception localizador não encontrado - " + e.getMessage());

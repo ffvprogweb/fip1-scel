@@ -77,7 +77,7 @@ class REQ01CadastrarLivroTS {
 		paginaLogin.login("jose", "123");
 		PageCadastrarLivro pageLivro = new PageCadastrarLivro(driver);
 		pageLivro.cadastrar("3333", "Teste de Software", "Delamaro");
-		assertEquals("Lista de livros", pageLivro.getResultadoCadastroComSucesso());
+		assertEquals("Lista de livros", pageLivro.getResultadoObtido("Lista de Livros"));
 	}
 
 	public void espera() {

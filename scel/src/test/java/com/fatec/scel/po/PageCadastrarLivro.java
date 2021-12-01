@@ -42,25 +42,7 @@ public class PageCadastrarLivro {
 		return new PageCadastrarLivro(driver);
 	}
 
-	/*
-	 * Resultado do teste - compara com o titulo da pagina de consulta
-	 */
-	public String getResultadoCadastroComSucesso() {
-		espera();
-		resultadoObtido = driver.findElement(resultadoCadastroComSucessoBy).getText();
-		return resultadoObtido;
-	}
-
-	public String getResultadoLivroJaCadastrado() {
-		resultadoObtido = driver.findElement(resultadoLivroJaCadastradoBy).getText();
-		return resultadoObtido;
-	}
-
-	public String getResultadoISBNInvalido() {
-		resultadoObtido = driver.findElement(resultadoISBNInvalidoBy).getText();
-		return resultadoObtido;
-	}
-
+	
 	public void excluiRegistro() {
 		driver.findElement(btnExcluirBy).click();
 	}
