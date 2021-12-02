@@ -1,9 +1,6 @@
 package com.fatec.scel.dd;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.concurrent.TimeUnit;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.apache.logging.log4j.LogManager;
@@ -20,9 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import com.fatec.scel.mantemLivro.ports.LivroRepository;
 import com.fatec.scel.po.PageCadastrarLivro;
 import com.fatec.scel.po.PageLogin;
-
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
-
 class REQ01CadastrarLivroTS {
 	static private WebDriver driver;
 	static JavascriptExecutor js;
@@ -31,7 +26,6 @@ class REQ01CadastrarLivroTS {
 	private static Logger logger;
 	@Autowired
 	LivroRepository repository;
-
 	@BeforeAll
 	public static void inicializa() {
 		logger = LogManager.getLogger(REQ01CadastrarLivroTS.class);
@@ -50,7 +44,6 @@ class REQ01CadastrarLivroTS {
 	public static void tearDown() {
 		DriverFactory.finaliza();
 	}
-
 	@Test
 	public void cadastrarLivro() throws Exception {
 		// se o campo for lancado na planilha como numerico mas a entrada eh String deve
